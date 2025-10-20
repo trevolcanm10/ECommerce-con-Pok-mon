@@ -1,0 +1,2 @@
+1.https://getbootstrap.com/
+2.https://releases.jquery.com/
