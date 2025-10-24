@@ -31,9 +31,9 @@
             </div>
 
             <div class="col-md-9">
-                <div class="row">
+                <div class="row" id="listpokemon">
                     <div class="col-sm-4 col-lg-3 col-md-3">
-                        <div class="pokemon">
+                        <div class="pokemon text-center">
                             <img src="https://img.pokemondb.net/sprites/black-white/anim/normal/bulbasaur.gif" alt="" class="img-responsive">
                             <p>001</p>
                             <h4>Bulbasor</h4>
@@ -41,18 +41,6 @@
                             <p>Ataque:100</p>
                             <p>Defensa:100</p>
                         </div>
-                    </div>
-                    
-                    <div class="col-sm-4 col-lg-3 col-md-3">
-                        <h1>a</h1>
-                    </div>
-                    
-                    <div class="col-sm-4 col-lg-3 col-md-3">
-                        <h1>a</h1>
-                    </div>
-
-                    <div class="col-sm-4 col-lg-3 col-md-3">
-                        <h1>a</h1>
                     </div>
                 </div>
             </div>

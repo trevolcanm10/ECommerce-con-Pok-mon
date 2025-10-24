@@ -5,4 +5,8 @@
 
 .pokemon{
     border:1px solid #ccc;
+    border-radius: 5px;
+    padding: 16px;
+    margin-bottom: 16px;
+    height: 250px;
 }
