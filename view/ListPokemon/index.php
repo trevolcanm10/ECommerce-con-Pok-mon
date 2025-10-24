@@ -14,34 +14,13 @@
             <div class="col-md-3">
                 <div class="list-group">
                     <h4>Tipo</h4>
-                    <div>
-                        <div class="list-group-item checkbox">
-                            <label ><input type="checkbox" value="">Fire</label>
-                        </div>
-
-                        <div class="list-group-item checkbox">
-                            <label ><input type="checkbox" value="">Water</label>
-                        </div>
-
-                        <div class="list-group-item checkbox">
-                            <label ><input type="checkbox" value="">Grass</label>
-                        </div>
+                    <div id="listipo">
                     </div>
                 </div>
             </div>
 
             <div class="col-md-9">
                 <div class="row" id="listpokemon">
-                    <div class="col-sm-4 col-lg-3 col-md-3">
-                        <div class="pokemon text-center">
-                            <img src="https://img.pokemondb.net/sprites/black-white/anim/normal/bulbasaur.gif" alt="" class="img-responsive">
-                            <p>001</p>
-                            <h4>Bulbasor</h4>
-                            <h5>Grass</h5>
-                            <p>Ataque:100</p>
-                            <p>Defensa:100</p>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>       

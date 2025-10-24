@@ -12,15 +12,29 @@ switch($_GET["op"]){
             ?>
                 <div class="col-sm-4 col-lg-3 col-md-3">
                         <div class="pokemon text-center">
-                            <img src="https://img.pokemondb.net/sprites/black-white/anim/normal/bulbasaur.gif" alt="" class="img-responsive">
-                            <p>001</p>
-                            <h4>Bulbasor</h4>
-                            <h5>Grass</h5>
-                            <p>Ataque:100</p>
-                            <p>Defensa:100</p>
+                            <img src="<?php echo $row["imagengif"]?>" alt="" class="img-responsive" height="50" width="50">
+                            <p><?php echo $row["number"]?></p>
+                            <h4><?php echo $row["nombre"]?></h4>
+                            <h5><?php echo $row["tipo"]?></h5>
+                            <p>Ataque: <?php echo $row["attack"]?></p>
+                            <p>Defensa: <?php echo $row["defense"]?></p>
                         </div>
                 </div>
             <?php
         }
+        break;
+    
+
+    case "tipo":
+        $datos=$pokemon->get_tipo();
+        foreach($datos as $row){
+            ?>
+                <div class="list-group-item checkbox">
+                    <label ><input type="checkbox" value=""><?php echo $row["tipo"]?></label>
+                </div>
+            <?php
+        }
+        break;
+
 }
 ?>
