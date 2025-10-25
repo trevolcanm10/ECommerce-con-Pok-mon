@@ -20,4 +20,28 @@ $(document).ready(function(){
         }
 
     })
+
+    $(document).on('change','.tipo-check',function(){
+        filtrarPorTipos();
+    });
 });
+
+
+function filtrarPorTipos(){
+    let tipos =[];
+
+    $('input[type="checkbox"]:checked').each(function(){
+        tipos.push($(this).val());
+    });
+
+    $.ajax({
+        url:"../../controller/pokemon.php?op=filtrar",
+        type:"POST",
+        data:{'tipos[]':tipos},
+        traditional:true,
+        success:function(data){
+            console.log(data);
+            $("#listpokemon").html(data);
+        }
+    });
+}
