@@ -24,27 +24,54 @@ ini_set('display_errors', 1);
             
         }
 
-        public function filtrar_tipos($tipos){
+        public function filtrar_tipos($tipos, $nombre){
             $conectar = parent::conexion();//Parent, usamos el método conexion de Conectar
             parent::set_names();//Funcion que permite gestionar tildes o ñ
 
-            if(empty($tipos)){
+            //Si no hay tipos pero si nombre
+            if(empty($tipos) && !empty($nombre)){
+                $sql="SELECT * FROM tm_pokemon WHERE nombre LIKE ?";
+                $sql = $conectar->prepare($sql);
+                $sql->bindValue(1,"%".$nombre."%");//Le pasa el nombre para la consulta respectiva
+                $sql->execute();
+                return $sql->fetchAll(PDO::FETCH_ASSOC);
+            }
+            //Si no hay filtros mostrar todo
+            if(empty($tipos)&& empty($nombre)){
                 $sql = "SELECT * FROM tm_pokemon";
                 $sql = $conectar->prepare($sql);
                 $sql->execute();
                 return $sql->fetchALL(PDO::FETCH_ASSOC);
             }
+
+            //Si hay tipos y/o nombre -> Construcción de una consulta combinada
+            $sql = "SELECT * FROM tm_pokemon WHERE 1=1";
+            //Filtro por nombre
+            if(!empty($nombre)){
+                $sql .= " AND nombre LIKE ?";
+            }
             //Preparamos los "?" dependiendo de cuántos tipos marcó el usuario
             //Ejemplo: si $tipos = ['Agua','Fuego'], entonces: "?,?"
-            $placeholders=implode(',',array_fill(0,count($tipos),'?'));
-            //Busca Pokemón cuyo tipo esté en cualquiera de los tipos seleccionados
-            $sql = "SELECT * FROM tm_pokemon WHERE tipo IN ($placeholders)";
+            //Si estamos filtrando tipos
+            if(!empty($tipos)){
+                $placeholders=implode(',',array_fill(0,count($tipos),'?'));
+                //Busca Pokemón cuyo tipo esté en cualquiera de los tipos seleccionados
+                $sql .= " AND tipo IN($placeholders)";
+            }
+            
             //Preparacion de la orden
             $sql = $conectar->prepare($sql);
-            
+            $paramIndex=1;
+
+            if(!empty($nombre)){
+                $sql->bindValue($paramIndex++,"%".$nombre."%");
+            }
+
             //Colocamos cada tipo dentro de los ? en orden correcto y seguro
-            foreach ($tipos as $i => $tipo) {
-                $sql->bindValue($i+1,$tipo);
+            if(!empty($tipos)){
+                foreach ($tipos as $tipo) {
+                $sql->bindValue($paramIndex++,$tipo);
+                }
             }
 
             //Enviamos los tipos seleccionados a la consulta

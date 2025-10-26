@@ -12,6 +12,15 @@
         <h1>Filtro Avanzando</h1> 
         <div class="row">
             <div class="col-md-3">
+
+                <div class="list-group">
+                    <h4>Nombre</h4>
+                    <div class="list-group-item">
+                        <input id="textnombre" class="form-control"/>
+                    </div>
+                </div>
+
+                <br>
                 <div class="list-group">
                     <h4>Tipo</h4>
                     <div id="listipo">
