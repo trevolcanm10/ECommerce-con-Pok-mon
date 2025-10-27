@@ -24,28 +24,13 @@ ini_set('display_errors', 1);
             
         }
 
-        public function filtrar_tipos($tipos, $nombre){
+        public function filtrar_tipos($tipos, $nombre, $ataque = null , $defensa = null){
             $conectar = parent::conexion();//Parent, usamos el método conexion de Conectar
             parent::set_names();//Funcion que permite gestionar tildes o ñ
 
-            //Si no hay tipos pero si nombre
-            if(empty($tipos) && !empty($nombre)){
-                $sql="SELECT * FROM tm_pokemon WHERE nombre LIKE ?";
-                $sql = $conectar->prepare($sql);
-                $sql->bindValue(1,"%".$nombre."%");//Le pasa el nombre para la consulta respectiva
-                $sql->execute();
-                return $sql->fetchAll(PDO::FETCH_ASSOC);
-            }
-            //Si no hay filtros mostrar todo
-            if(empty($tipos)&& empty($nombre)){
-                $sql = "SELECT * FROM tm_pokemon";
-                $sql = $conectar->prepare($sql);
-                $sql->execute();
-                return $sql->fetchALL(PDO::FETCH_ASSOC);
-            }
-
             //Si hay tipos y/o nombre -> Construcción de una consulta combinada
             $sql = "SELECT * FROM tm_pokemon WHERE 1=1";
+
             //Filtro por nombre
             if(!empty($nombre)){
                 $sql .= " AND nombre LIKE ?";
@@ -59,6 +44,14 @@ ini_set('display_errors', 1);
                 $sql .= " AND tipo IN($placeholders)";
             }
             
+            //Si el usuario mueve el slider de ataque
+            if(!empty($ataque)){
+                $sql .= " AND attack <= ?";
+            }
+
+            if(!empty($defensa)){
+                $sql .= " AND defense <= ?";
+            }
             //Preparacion de la orden
             $sql = $conectar->prepare($sql);
             $paramIndex=1;
@@ -73,7 +66,14 @@ ini_set('display_errors', 1);
                 $sql->bindValue($paramIndex++,$tipo);
                 }
             }
+            
+            if(!empty($ataque)){
+                $sql->bindValue($paramIndex++,$ataque, PDO::PARAM_INT);
+            }
 
+            if(!empty($defensa)){
+                $sql->bindValue($paramIndex++,$defensa, PDO::PARAM_INT);
+            }
             //Enviamos los tipos seleccionados a la consulta
             $sql->execute();
             return $sql->fetchALL(PDO::FETCH_ASSOC);

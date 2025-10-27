@@ -42,12 +42,14 @@ switch($_GET["op"]){
     case "filtrar":
         $tipos = isset($_POST["tipos"]) ? $_POST["tipos"]:[];
         $nombre = isset($_POST["nombre"])? $_POST["nombre"]:"";
-        
+        $ataque = isset($_POST["ataque"]) ? $_POST["ataque"] : null;
+        $defensa = isset($_POST["defensa"]) ? $_POST["defensa"] : null;
+
         if(!is_array($tipos)){
             $tipos = [$tipos];//Si llega un solo valor , lo volveremos array
         }
 
-        $datos = $pokemon->filtrar_tipos($tipos,$nombre);
+        $datos = $pokemon->filtrar_tipos($tipos,$nombre,$ataque,$defensa);
 
         foreach($datos as $row){
             ?>

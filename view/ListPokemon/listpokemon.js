@@ -2,6 +2,28 @@ console.log("Test");
 
 //Espera que la página cargue
 $(document).ready(function(){
+
+    var ataqueSlider = new Slider('#txtataque',{
+        min:0,
+        max:200,
+        step:1,
+    });
+
+
+    var defensaSlider = new Slider ('#txtdefensa',{
+        min:0,
+        max:200,
+        step:1,
+    });
+
+    ataqueSlider.on('slideStop',function(){
+        filtrarPorTipos();
+    });
+
+    defensaSlider.on('slideStop',function(){
+        filtrarPorTipos();
+    });
+
     //Pide al servidor la lista de pokemones
     $.ajax({
         url:"../../controller/pokemon.php?op=listar",
@@ -36,13 +58,22 @@ function filtrarPorTipos(){
     let tipos =[];
     let nombre = $("#textnombre").val();
 
+    //Capturamos valores de los sliders
+    let ataque = parseInt($('#txtataque').val());
+    let defensa = parseInt($('#txtdefensa').val());
+
+    
     //Recorremos todo los checkboxes que estén marcados
     $('input[type="checkbox"]:checked').each(function(){
         //Por cada checkbox marcado guardamos su valor dentro del array
         tipos.push($(this).val());
     });
 
-    let dataToSend = {nombre:nombre}; //Siempre enviamos el nombre
+    let dataToSend = {
+        nombre:nombre,
+        ataque:ataque,
+        defensa:defensa
+    }; //Siempre enviamos el nombre
     if(tipos.length > 0 ){
         dataToSend['tipos[]']=tipos;//Solo enviamos tipo si hay alguno seleccionado
     }
