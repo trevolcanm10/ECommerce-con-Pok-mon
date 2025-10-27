@@ -61,7 +61,3 @@ Proyecto MVC con PHP, MySQL y JavaScript que permite filtrar Pokémon en tiempo 
 MIT License
 
 ---
-
-
-Desarrollado por [Tu Nombre]  
-GitHub: https://github.com/tuusuario
